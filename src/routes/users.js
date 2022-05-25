@@ -1,7 +1,38 @@
 import { BadRequestError } from '../utils/errors';
+import bcrypt from 'bcryptjs/dist/bcrypt';
 
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const auth = require('../middleware/authJwt');
+
+
+router.post('/api/user/changePassword', auth, async (req, res) =>{
+    const user = await User.findById({ _id: req.session.passport.user._id});
+    const { oldPass, newPass} = req.body;
+
+    if(!user){
+        return res.status(400).json("User not found!");
+    }
+
+    let confirm;
+    await bcrypt.compare(oldPass, user.password).then((result) => {
+        confirm = result;
+    });
+
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPass, salt);
+    if(confirm) {
+        await User.findByIdAndUpdate({ _id: req.session.passport.user._id}, {password: hashedPassword });
+        return res.status(200).json("Password changed!");
+    }
+    return res.status(402).json({
+        msg: "Wrong password"
+    })
+
+});
+
+
 
 module.exports = router;
