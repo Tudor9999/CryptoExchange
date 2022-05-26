@@ -1,7 +1,5 @@
 import bcrypt from 'bcryptjs/dist/bcrypt';
 import { BadRequestError } from '../utils/errors';
-import bcrypt from 'bcryptjs/dist/bcrypt';
-
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
