@@ -7,7 +7,7 @@ const User = require('../models/user');
 const jwt = require("jsonwebtoken");
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-
+/*
 passport.use(
     new LocalStrategy(
         (username, password, done) => {
@@ -41,8 +41,8 @@ router.post('/api/user/login', passport.authenticate('local', {
     (req, res) => {
     res.redirect(`/api/user/${req.session.passport.user.id}`)
 })
+*/
 
-/*
 
 //Login
 router.post('/api/user/login', async (req, res) =>{
@@ -58,7 +58,7 @@ router.post('/api/user/login', async (req, res) =>{
     res.header('auth-token', token).send(token);
     
 });
-*/
+
 
 
 module.exports = router;

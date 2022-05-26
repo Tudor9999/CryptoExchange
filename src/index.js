@@ -10,7 +10,7 @@ const registerRoute = require('./routes/register');
 const loginRoute = require('./routes/login');
 const gitHubRoutes = require('./routes/githubOAuth');
 const googleRoutes = require('./routes/googleOauth');
-//const usersRoute = require('./routes/users');
+const usersRoute = require('./routes/users');
 
 
 //Middlewares
@@ -26,6 +26,7 @@ app.use(registerRoute);
 app.use(loginRoute);
 app.use(gitHubRoutes);
 app.use(googleRoutes);
+app.use(usersRoute);
 
 
 //Connect to DB
