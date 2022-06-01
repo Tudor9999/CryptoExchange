@@ -1,11 +1,10 @@
-//import bcrypt from 'bcryptjs/dist/bcrypt';
 import { BadRequestError } from '../utils/errors';
 
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
-const Wallet = require('../models/wallet');
+const createWallet = require('../utils/createWallet');
 
 router.post('/api/user/register', async (req, res) =>{
 
@@ -25,18 +24,17 @@ router.post('/api/user/register', async (req, res) =>{
 
 
     //Create new user
-    const user = new User({
+    const user = {
         username: req.body.username,
         email: req.body.email,
         password: hashedPassword,
         phone: req.body.phone
-    });
-    try{
-        const savedUser = await user.save();
-        res.send(savedUser);
-    }catch(err){
-        res.status(400).send(err);
-    }
+    };
+    
+    const foundUser = await User.findOne({username: req.body.username});
+    await createWallet(foundUser, user, res);
+
+
 });
 
 
