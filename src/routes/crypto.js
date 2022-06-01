@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Currency = require("../models/currency");
+const auth = require("../middleware/authJwt");
 
 router.post('/api/addcrypto', async(req, res) =>{
     const { currencyName, ratio, amount } = req.body;
@@ -23,7 +24,7 @@ router.post('/api/addcrypto', async(req, res) =>{
 
 });
 
-router.get('/api/crypto', async(req, res) =>{
+router.get('/api/crypto', auth, async(req, res) =>{
     const cryptoList = await Currency.find();
 
     if(!cryptoList){
