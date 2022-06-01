@@ -17,4 +17,26 @@ router.get('/api/wallet', auth, async(req,res) =>{
     });
 });
 
+router.put("/api/deposit-funds", auth, async (req, res) =>{
+    const { amount } = req.body;
+    const wallet = await Wallet.findOne({ userId: req.user._id});
+    const xUSD = await Currency.findOne({ "currencyName": "xUSD"});
+
+    const totalAmount = wallet.currency[0].currencyAmount + amount
+    await Wallet.findOneAndUpdate({
+        userId: req.user._id,
+        "currency.currencyId": xUSD._id
+    }, {
+        $set: {
+            "currency.$.currencyAmount": totalAmount
+        }
+    })
+    res.status(200).json({
+        message: "Successful deposit",
+        wallet
+    });
+
+});
+
+
 module.exports = router;
