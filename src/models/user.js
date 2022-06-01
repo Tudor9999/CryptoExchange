@@ -22,6 +22,11 @@ const userSchema = new mongoose.Schema({
         type: Number,
         //required: true
     },
+    provider: {
+        type: String,
+        enum: ["github", "google", "default"],
+        default: "default",
+    },
     createdAt: { type: Date, default: Date.now },
     lastLogin: { type: Date, default: Date.now },
 }, {
