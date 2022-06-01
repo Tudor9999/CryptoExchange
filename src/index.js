@@ -11,7 +11,7 @@ const loginRoute = require('./routes/login');
 const gitHubRoutes = require('./routes/githubOAuth');
 const googleRoutes = require('./routes/googleOauth');
 const usersRoute = require('./routes/users');
-
+const walletRoute = require('./routes/wallet');
 
 //Middlewares
 app.use(cors());
@@ -27,7 +27,7 @@ app.use(loginRoute);
 app.use(gitHubRoutes);
 app.use(googleRoutes);
 app.use(usersRoute);
-
+app.use(walletRoute);
 
 //Connect to DB
 const uri = process.env.ATLAS_URI;
