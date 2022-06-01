@@ -12,7 +12,7 @@ const createWallet = async (foundUser, user, res) => {
                 currency: [
                     {
                         currencyId: xUSD._id,
-                        amount: 1000
+                        currencyAmount: 1000
                     }
                 ]
             });
